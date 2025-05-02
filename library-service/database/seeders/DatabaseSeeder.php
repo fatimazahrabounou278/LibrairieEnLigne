@@ -11,19 +11,18 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
-    {
-
+   public function run(): void
+{
     $this->call([
         BookSeeder::class,
         LibrarySeeder::class,
         BookLibrarySeeder::class,
     ]);
-    User::factory()->create([
+
+
+        User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-}
-
-
+    }
 }

@@ -8,4 +8,10 @@ class Book extends Model
 {
   protected $fillable = ['title', 'author', 'price', 'stock', 'image', 'description', 'category'];
 
+
+public function libraries()
+{
+    return $this->belongsToMany(Library::class, 'book_library');
+}
+
 }

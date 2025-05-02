@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-  public function index(Request $request)
+ public function index(Request $request)
 {
-    $query = Book::query();
+    $query = Book::with('libraries'); // ← AJOUT ICI
 
     if ($request->has('title')) {
         $query->where('title', 'like', '%' . $request->title . '%');
@@ -29,24 +29,7 @@ class BookController extends Controller
 
     return $query->get();
 }
-public function decrementStock($id)
-{
-    $book = Book::find($id);
 
-    if (!$book) {
-        return response()->json(['message' => 'Livre non trouvé'], 404);
-    }
-
-    if ($book->stock <= 0) {
-        return response()->json(['message' => 'Stock insuffisant'], 400);
-    }
-
-    $book->stock -= 1;
-    $book->save();
-
-    // Prochaine étape : ici on pourra émettre l’événement RabbitMQ si stock = 0
-    return response()->json(['message' => 'Stock décrémenté', 'stock_restant' => $book->stock]);
-}
 
 public function bladeIndex(Request $request)
 {
@@ -115,4 +98,7 @@ public function filter(Request $request)
         $book->delete();
         return response()->json(['message' => 'Livre supprimé']);
     }
+    
+
+
 }
