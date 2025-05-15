@@ -24,24 +24,28 @@ const BooksList = () => {
   }
 
   return (
-    <div className="books-container">
-      <h1>Liste des livres</h1>
-      <ul>
+    <div className="books-page">
+      <header className="books-header">
+        <h1> Library</h1>
+        <nav>
+          <a href="/home">Accueil</a>
+          <a href="/cart">Panier</a>
+          <a href="/profile">Mon compte</a>
+        </nav>
+      </header>
+
+      <div className="books-container">
         {books.map((book) => (
-          <li key={book.id} className="book-item">
+          <div key={book.id} className="book-card">
             <h2>{book.title}</h2>
-            <p>Auteur : {book.author}</p>
-            <p>Prix : {book.price}€</p>
-            <p>Description : {book.description}</p>
-            <p>
-              Librairies :
-              {book.libraries.map((library) => (
-                <span key={library.id}>{library.name}</span>
-              ))}
-            </p>
-          </li>
+            <p><strong>Auteur :</strong> {book.author}</p>
+            <p><strong>Prix :</strong> {book.price} €</p>
+            <p><strong>Description :</strong> {book.description}</p>
+            <p><strong>Librairies :</strong> {book.libraries.map(lib => lib.name).join(", ")}</p>
+            <button className="buy-button">Acheter</button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
