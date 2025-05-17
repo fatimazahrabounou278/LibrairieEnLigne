@@ -1,8 +1,8 @@
+// middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 
-// Middleware général : vérifie le token et ajoute les infos de l'utilisateur à req.user
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
@@ -21,7 +21,6 @@ const authenticateToken = (req, res, next) => {
   }
 };
 
-// Middleware spécifique : vérifie le rôle
 const authorizeRoles = (...allowedRoles) => {
   return (req, res, next) => {
     if (!req.user || !allowedRoles.includes(req.user.role)) {

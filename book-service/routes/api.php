@@ -13,5 +13,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::get('/books-with-libraries', [BookController::class, 'getBooksWithLibraries']);
 
+
 Route::middleware('auth:sanctum')->post('/orders/checkout', [OrderController::class, 'checkout']);
 Route::middleware('auth:sanctum')->get('/orders/history', [OrderController::class, 'history']);

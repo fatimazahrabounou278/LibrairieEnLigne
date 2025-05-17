@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    // ✅ Récupérer tous les livres (avec filtres possibles)
     public function index(Request $request)
     {
         $query = Book::with('libraries');
@@ -30,6 +31,7 @@ class BookController extends Controller
         return response()->json($query->get());
     }
 
+    // ✅ Ajouter un nouveau livre
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -39,11 +41,12 @@ class BookController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'category' => 'nullable|string',
-            'library_id' => 'nullable|exists:libraries,id' // Si tu veux lier à une librairie
+            'library_id' => 'nullable|exists:libraries,id',
         ]);
 
         $book = Book::create($validated);
 
+        // ✅ Lier le livre à une librairie (relation many-to-many)
         if ($request->has('library_id')) {
             $book->libraries()->attach($request->library_id);
         }
@@ -51,12 +54,14 @@ class BookController extends Controller
         return response()->json($book, 201);
     }
 
+    // ✅ Afficher les détails d’un livre
     public function show($id)
     {
         $book = Book::with('libraries')->findOrFail($id);
         return response()->json($book);
     }
 
+    // ✅ Mettre à jour un livre
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);
@@ -75,6 +80,7 @@ class BookController extends Controller
         return response()->json($book);
     }
 
+    // ✅ Supprimer un livre
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
@@ -82,6 +88,7 @@ class BookController extends Controller
         return response()->json(['message' => 'Livre supprimé']);
     }
 
+    // ✅ Vue Blade (si utilisée côté web)
     public function bladeIndex(Request $request)
     {
         $query = Book::where('stock', '>', 0);
@@ -107,6 +114,7 @@ class BookController extends Controller
         return view('books.index', compact('books'));
     }
 
+    // ✅ Filtrage via API
     public function filter(Request $request)
     {
         $query = Book::query();
@@ -128,5 +136,11 @@ class BookController extends Controller
         }
 
         return response()->json($query->get());
+    }
+
+    // ✅ Liste tous les livres avec leurs librairies associées
+    public function getBooksWithLibraries()
+    {
+        return Book::with('libraries')->get();
     }
 }

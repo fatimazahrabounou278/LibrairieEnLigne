@@ -2,11 +2,11 @@
 
 return [
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000'], // <- Mets l'URL de ton frontend React
+    'allowed_origins' => ['*'], // <- Mets l'URL de ton frontend React
 
     'allowed_origins_patterns' => [],
 
@@ -17,5 +17,8 @@ return [
     'max_age' => 0,
 
     'supports_credentials' => false,
+ 
+
+
 
 ];

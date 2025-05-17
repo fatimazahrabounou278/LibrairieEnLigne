@@ -7,7 +7,7 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
-    role: '',
+    role: 'client',  // rôle forcé à client
   });
 
   const [message, setMessage] = useState('');
@@ -21,10 +21,14 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setMessage('');
+
     try {
       await axios.post('http://localhost:5000/api/auth/register', formData);
-      setMessage('Inscription réussie !');
-      navigate('/login');
+      setMessage('Inscription réussie ! Vous pouvez vous connecter.');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || 'Erreur lors de l’inscription.');
     }
@@ -61,17 +65,7 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Sélectionner un rôle --</option>
-            <option value="user">Utilisateur</option>
-            <option value="admin">Admin</option>
-            <option value="responsable">Responsable</option>
-          </select>
+          {/* Rôle forcé, on ne montre pas de select */}
           <button type="submit">S'inscrire</button>
         </form>
       </div>
@@ -85,7 +79,6 @@ const Register = () => {
           background: linear-gradient(to right, #dff9fb, #ffffff);
           font-family: 'Segoe UI', sans-serif;
         }
-
         .register-box {
           background-color: white;
           padding: 40px 30px;
@@ -94,20 +87,17 @@ const Register = () => {
           width: 100%;
           max-width: 400px;
         }
-
         h2 {
           text-align: center;
           margin-bottom: 24px;
           color: #2c3e50;
         }
-
         form {
           display: flex;
           flex-direction: column;
           gap: 16px;
         }
-
-        input, select {
+        input {
           padding: 12px;
           border: 1px solid #ccc;
           border-radius: 8px;
@@ -115,11 +105,9 @@ const Register = () => {
           outline: none;
           transition: border 0.2s;
         }
-
-        input:focus, select:focus {
+        input:focus {
           border-color: #3498db;
         }
-
         button {
           padding: 12px;
           background-color: #3498db;
@@ -130,17 +118,14 @@ const Register = () => {
           cursor: pointer;
           transition: background-color 0.3s;
         }
-
         button:hover {
           background-color: #2980b9;
         }
-
         .success-message {
           color: #27ae60;
           text-align: center;
           margin-bottom: 10px;
         }
-
         .error-message {
           color: #e74c3c;
           text-align: center;

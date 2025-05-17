@@ -62,7 +62,6 @@ const Login = () => {
           background: linear-gradient(to right, #e0f7fa, #ffffff);
           font-family: 'Segoe UI', sans-serif;
         }
-
         .login-box {
           background-color: white;
           padding: 40px 30px;
@@ -71,18 +70,15 @@ const Login = () => {
           width: 100%;
           max-width: 400px;
         }
-
         h2 {
           text-align: center;
           margin-bottom: 24px;
           color: #2c3e50;
         }
-
         form {
           display: flex;
           flex-direction: column;
         }
-
         input {
           padding: 12px 15px;
           margin-bottom: 16px;
@@ -92,11 +88,9 @@ const Login = () => {
           outline: none;
           transition: border 0.2s;
         }
-
         input:focus {
           border-color: #3498db;
         }
-
         button {
           padding: 12px;
           background-color: #3498db;
@@ -107,11 +101,9 @@ const Login = () => {
           cursor: pointer;
           transition: background-color 0.3s;
         }
-
         button:hover {
           background-color: #2980b9;
         }
-
         .error-message {
           color: #e74c3c;
           margin-bottom: 16px;
